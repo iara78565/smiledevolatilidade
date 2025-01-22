@@ -1,11 +1,14 @@
-#Esse código tem como objetivo coletar dados de opções de ações de 10 empresas aleatórias, calcular e plotar os gráficos conhecidos como "Smile de Volatilidade" para opções CALL e PUT
-
+# Este código tem como objetivo coletar dados de opções de ações de 10 empresas aleatórias,
+# calcular e plotar gráficos conhecidos como "Smile de Volatilidade" para opções CALL e PUT.
+# O "Smile de Volatilidade" é uma representação gráfica da volatilidade implícita das opções
+# em diferentes níveis de preço de exercício (strike), usado para identificar a relação entre
+# a volatilidade e o preço das opções.
 import pandas as pd
 import requests
 import matplotlib.pyplot as plt
 import random
 
-# Função para obter a lista de empresas disponíveis no link
+# Função para obter a lista de empresas disponíveis no url do opções net.
 def obter_empresas_aleatorias(url, num_empresas=10):
     """
     Obtém uma lista de empresas aleatórias a partir do link fornecido.
@@ -117,3 +120,18 @@ def analisar_smile_volatilidade():
 
 # Chama a função principal
 analisar_smile_volatilidade()
+# Estatísticas descritivas para volatilidade
+print(df_opcoes['volatilidade'].describe())  # Estatísticas como média, desvio padrão, etc.
+
+# Adicionando uma análise simples para as volatilidades
+media_volatilidade_call = df_call['volatilidade'].mean()
+media_volatilidade_put = df_put['volatilidade'].mean()
+
+print(f'Média da volatilidade CALL: {media_volatilidade_call:.2f}%')
+print(f'Média da volatilidade PUT: {media_volatilidade_put:.2f}%')
+
+# Conclusão
+if media_volatilidade_call > media_volatilidade_put:
+    print("A volatilidade implícita das opções CALL está mais alta que das PUT.")
+else:
+    print("A volatilidade implícita das opções PUT está mais alta que das CALL.")
